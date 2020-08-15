@@ -15,8 +15,11 @@ import com.interview.kingpower.model.PhotoRes
 import com.interview.kingpower.model.PhotoResItem
 import com.interview.kingpower.view.GridSpacingItemDecoration
 import com.interview.kingpower.viewmodel.PhotoViewModel
+import com.interview.kingpower.viewmodel.ToolbarViewModel
 import kotlinx.android.synthetic.main.fragment_photo_list.*
 import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class PhotoListFragment : Fragment() {
 
@@ -25,7 +28,8 @@ class PhotoListFragment : Fragment() {
         private const val SPACING = 40
     }
 
-    private val photoViewModel: PhotoViewModel by inject()
+    private val photoViewModel: PhotoViewModel by viewModel()
+    private val toolbarViewModel by sharedViewModel<ToolbarViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -43,6 +47,7 @@ class PhotoListFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        toolbarViewModel.titleText.value = getString(R.string.app_name)
         initObserve()
         photoViewModel.getPhotoList()
     }

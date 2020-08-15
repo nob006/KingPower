@@ -23,7 +23,6 @@ class PhotoListAdapter(private val list: PhotoRes, val onItemClick: (PhotoResIte
         holder.bind(list[position])
     }
 
-
     inner class ViewHolder(private val view: ItemPhotoListBinding) :
         RecyclerView.ViewHolder(view.root) {
         fun bind(photoResItem: PhotoResItem) {
