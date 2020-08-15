@@ -9,9 +9,9 @@ import retrofit2.converter.gson.GsonConverterFactory
 class RetrofitClient {
 
     private fun createBuilder() = Retrofit.Builder()
-            .baseUrl(Constant.BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create(GsonBuilder().create()))
-            .build()
+        .baseUrl(Constant.BASE_URL)
+        .addConverterFactory(GsonConverterFactory.create(GsonBuilder().create()))
+        .build()
 
     fun <T> create(classService: Class<T>): T {
         return createBuilder().create(classService)

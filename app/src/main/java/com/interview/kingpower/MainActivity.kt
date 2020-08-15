@@ -1,5 +1,6 @@
 package com.interview.kingpower
 
+import android.graphics.Color
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -16,7 +17,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         setSupportActionBar(toolbar)
-
+        toolbar.setTitleTextColor(Color.WHITE)
         toolbarViewModel.titleText.observe(this, Observer { title ->
             supportActionBar?.title = title
         })

@@ -7,8 +7,16 @@ import com.interview.kingpower.databinding.ItemPhotoListBinding
 import com.interview.kingpower.model.PhotoRes
 import com.interview.kingpower.model.PhotoResItem
 
-class PhotoListAdapter(private val list: PhotoRes, val onItemClick: (PhotoResItem) -> Unit) :
+class PhotoListAdapter(val onItemClick: (PhotoResItem) -> Unit) :
     RecyclerView.Adapter<PhotoListAdapter.ViewHolder>() {
+
+    private var list: PhotoRes = PhotoRes()
+
+    fun setData(list: PhotoRes) {
+        this.list = list
+        notifyDataSetChanged()
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val view = ItemPhotoListBinding.inflate(inflater, parent, false)

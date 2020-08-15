@@ -16,9 +16,8 @@
     </style>
 
     <style name="ToolbarStyle" parent="Widget.AppCompat.ActionBar">
-        <item name="android:background">@color/colorPrimaryDark</item>
+        <item name="android:background">@color/colorPrimary</item>
         <item name="android:textColor">@android:color/white</item>
-        <item name="subtitleTextColor">@android:color/white</item>
     </style>
 
 </resources>

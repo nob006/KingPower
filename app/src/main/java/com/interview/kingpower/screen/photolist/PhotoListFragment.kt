@@ -11,13 +11,10 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.interview.kingpower.R
 import com.interview.kingpower.databinding.FragmentPhotoListBinding
-import com.interview.kingpower.model.PhotoRes
-import com.interview.kingpower.model.PhotoResItem
 import com.interview.kingpower.view.GridSpacingItemDecoration
 import com.interview.kingpower.viewmodel.PhotoViewModel
 import com.interview.kingpower.viewmodel.ToolbarViewModel
 import kotlinx.android.synthetic.main.fragment_photo_list.*
-import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -28,8 +25,10 @@ class PhotoListFragment : Fragment() {
         private const val SPACING = 40
     }
 
-    private val photoViewModel: PhotoViewModel by viewModel()
+    private val photoViewModel by viewModel<PhotoViewModel>()
     private val toolbarViewModel by sharedViewModel<ToolbarViewModel>()
+
+    private lateinit var adapter: PhotoListAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -47,26 +46,23 @@ class PhotoListFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        toolbarViewModel.titleText.value = getString(R.string.app_name)
+        initView()
         initObserve()
-        photoViewModel.getPhotoList()
+    }
+
+    private fun initView() {
+        toolbarViewModel.titleText.value = getString(R.string.app_name)
+        recycleView.layoutManager = GridLayoutManager(context, SPAN_COUNT)
+        adapter = PhotoListAdapter(onItemClick = { photoResItem ->
+            findNavController().navigate(PhotoListFragmentDirections.navigateFullscreen(photoResItem))
+        })
+        recycleView.adapter = adapter
+        recycleView.addItemDecoration(GridSpacingItemDecoration(SPAN_COUNT, SPACING, true))
     }
 
     private fun initObserve() {
         photoViewModel.photoRes.observe(viewLifecycleOwner, Observer { photoRes ->
-            initListView(photoRes)
+            adapter.setData(photoRes)
         })
-    }
-
-    private fun initListView(photoRes: PhotoRes) {
-        recycleView.layoutManager = GridLayoutManager(context, SPAN_COUNT)
-        recycleView.adapter = PhotoListAdapter(photoRes, onItemClick = {
-            navigateToFullScreenFragment(it)
-        })
-        recycleView.addItemDecoration(GridSpacingItemDecoration(SPAN_COUNT, SPACING, true))
-    }
-
-    private fun navigateToFullScreenFragment(photoResItem: PhotoResItem) {
-        findNavController().navigate(PhotoListFragmentDirections.navigateFullscreen(photoResItem))
     }
 }

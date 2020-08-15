@@ -1,6 +1,5 @@
 package com.interview.kingpower.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -16,15 +15,17 @@ class PhotoViewModel(
     private var _photoRes = MutableLiveData<PhotoRes>()
     val photoRes: LiveData<PhotoRes> get() = _photoRes
 
-    fun getPhotoList(){
-        Log.d("DEV" , "getPhotoList")
+    init {
+        getPhotoList()
+    }
+
+    private fun getPhotoList() {
         viewModelScope.launch {
             val res = photoListRepository.getPhotoList()
-            if (res.isSuccessful){
+            if (res.isSuccessful) {
                 _photoRes.value = res.body()
-            }
-            else{
-                Log.d("DEV" , "Failed")
+            } else {
+
             }
         }
     }
