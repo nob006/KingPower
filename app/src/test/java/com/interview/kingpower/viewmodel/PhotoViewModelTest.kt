@@ -34,9 +34,9 @@ class PhotoViewModelTest : ViewModelTest() {
         MockKAnnotations.init(this, relaxUnitFun = true)
         Dispatchers.setMain(dispatcher)
 
-        val photo = PhotoResItem(mockAlbumId, mockId, mockThumbnaiUrl, mockTitle, mockUrl)
+        val photoItem = PhotoResItem(mockAlbumId, mockId, mockThumbnaiUrl, mockTitle, mockUrl)
         val photoRes = PhotoRes().also {
-            it.add(photo)
+            it.add(photoItem)
         }
         coEvery { photoListRepository.getPhotoList() } returns Response.success(photoRes)
 
