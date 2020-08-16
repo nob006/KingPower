@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
+import com.google.android.material.snackbar.Snackbar
 import com.interview.kingpower.R
 import com.interview.kingpower.databinding.FragmentPhotoListBinding
 import com.interview.kingpower.view.GridSpacingItemDecoration
@@ -63,6 +64,10 @@ class PhotoListFragment : Fragment() {
     private fun initObserve() {
         photoViewModel.photoRes.observe(viewLifecycleOwner, Observer { photoRes ->
             adapter.setData(photoRes)
+        })
+
+        photoViewModel.showMessage.observe(viewLifecycleOwner, Observer { messageId ->
+            Snackbar.make(recycleView, getText(messageId), Snackbar.LENGTH_SHORT).show()
         })
     }
 }
